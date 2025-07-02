@@ -1,0 +1,32 @@
+{
+    "prettier.printWidth": 80,
+    "prettier.semi": false,
+    "prettier.useTabs": false,
+    "prettier.tabWidth": 2,
+
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "editor.autoIndent": "full",
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "editor.autoIndent": "full",
+        "prettier.tabWidth": 4,
+        "editor.codeActionsOnSave": {
+            "source.addMissingImports.ts": "always",
+            "source.removeUnusedImports": "always",
+        }
+    },
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "editor.autoIndent": "full",
+    },
+    "[css]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "editor.autoIndent": "full",
+    }
+}
