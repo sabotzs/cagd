@@ -33,11 +33,12 @@ function handleMouseDown(event: MouseEvent) {
             movedPoint = points[selectedPointIndex]
         } else if (event.button === 2) {
             points.splice(selectedPointIndex, 1)
+            draw()
         }
     } else if (event.button === 0) {
         points.push(mousePoint)
+        draw()
     }
-    draw()
 }
 
 function handleMouseMove(event: MouseEvent) {
