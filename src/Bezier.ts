@@ -1,5 +1,18 @@
 import { add, scale, Vec2 } from "./Vec2"
 
+export function elevateDegree(points: Vec2[]): Vec2[] {
+    const result = new Array<Vec2>(points.length + 1)
+
+    result[0] = points[0]
+    for (let i = 1; i < points.length; ++i) {
+        const t = i / points.length
+        result[i] = add(scale(points[i - 1], t), scale(points[i], 1 - t))
+    }
+    result[result.length - 1] = points[points.length - 1]
+
+    return result
+}
+
 export function bezierCurve(
     controlPoints: Vec2[],
     steps: number = 100

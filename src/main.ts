@@ -1,4 +1,4 @@
-import { bezierCurve } from "./Bezier"
+import { bezierCurve, elevateDegree } from "./Bezier"
 import { drawPath, drawPolygon } from "./Draw"
 import { Vec2 } from "./Vec2"
 
@@ -6,7 +6,7 @@ const canvas = document.getElementById("canvas") as HTMLCanvasElement
 const ctx = canvas.getContext("2d") as CanvasRenderingContext2D
 
 const mouseHandleRadius = 8
-const points: Vec2[] = []
+let points: Vec2[] = []
 let movedPoint: Vec2 | undefined
 
 window.addEventListener("load", () => {
@@ -17,6 +17,14 @@ window.addEventListener("load", () => {
 canvas.addEventListener("mousedown", handleMouseDown)
 canvas.addEventListener("mousemove", handleMouseMove)
 canvas.addEventListener("mouseup", handleMouseUp)
+
+document.addEventListener("keydown", (event) => {
+    console.log(event.key)
+    if (event.key === "PageUp" || (event.ctrlKey && event.key === "ArrowUp")) {
+        points = elevateDegree(points)
+        draw()
+    }
+})
 
 // suppress contex menu for removing points on right click
 canvas.addEventListener("contextmenu", (event) => event.preventDefault())
