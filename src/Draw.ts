@@ -1,14 +1,22 @@
 import { Vec2 } from "./Vec2"
 
-export function drawPath(
+export function drawPolygon(
     ctx: CanvasRenderingContext2D,
     points: Vec2[],
     pointStyle: string = "rgb(128, 0, 0)",
     lineStyle: string = "rgb(0, 0, 0)"
 ) {
+    drawPath(ctx, points, lineStyle)
+
     setStyle(ctx, pointStyle)
     points.forEach((point) => drawPoint(ctx, point))
+}
 
+export function drawPath(
+    ctx: CanvasRenderingContext2D,
+    points: Vec2[],
+    lineStyle: string = "rgb(0, 0, 0)"
+) {
     if (points.length < 2) {
         return
     }
