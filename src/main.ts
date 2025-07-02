@@ -1,4 +1,4 @@
-import { bezierCurve } from "./DeCasteljau"
+import { bezierCurve } from "./Bezier"
 import { drawPath, drawPolygon } from "./Draw"
 import { Vec2 } from "./Vec2"
 
