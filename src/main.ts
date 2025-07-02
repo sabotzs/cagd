@@ -4,6 +4,7 @@ import { Vec2 } from "./Vec2"
 const canvas = document.getElementById("canvas") as HTMLCanvasElement
 const ctx = canvas.getContext("2d") as CanvasRenderingContext2D
 
+const mouseHandleRadius = 8
 const points: Vec2[] = []
 
 window.addEventListener("load", () => {
@@ -11,10 +12,23 @@ window.addEventListener("load", () => {
     canvas.height = canvas.clientHeight
 })
 
-canvas.addEventListener("mousedown", (event) => {
-    const point = mouseLocationInCanvas(event)
+canvas.addEventListener("contextmenu", (event) => event.preventDefault())
 
-    points.push(point)
+canvas.addEventListener("mousedown", (event) => {
+    const mousePoint = mouseLocationInCanvas(event)
+
+    if (event.button === 0) {
+        points.push(mousePoint)
+    } else if (event.button === 2) {
+        const selectedPointIndex = points.findIndex((point) => {
+            const dx = point.x - mousePoint.x
+            const dy = point.y - mousePoint.y
+            return dx * dx + dy * dy <= mouseHandleRadius * mouseHandleRadius
+        })
+        if (selectedPointIndex !== -1) {
+            points.splice(selectedPointIndex, 1)
+        }
+    }
     draw()
 })
 
