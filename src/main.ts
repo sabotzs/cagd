@@ -1,4 +1,5 @@
-import { drawPolygon } from "./Draw"
+import { bezierCurve } from "./DeCasteljau"
+import { drawPath, drawPolygon } from "./Draw"
 import { Vec2 } from "./Vec2"
 
 const canvas = document.getElementById("canvas") as HTMLCanvasElement
@@ -55,6 +56,8 @@ function handleMouseUp() {
 
 function draw() {
     ctx.reset()
+    const curve = bezierCurve(points)
+    drawPath(ctx, curve, "rgb(0, 100, 200)")
     drawPolygon(ctx, points)
 }
 
