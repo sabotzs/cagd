@@ -11,6 +11,9 @@ const elevatedDegreeInput = document.getElementById(
 const curveStepsInput = document.getElementById(
     "curveStepsInput"
 ) as HTMLInputElement
+const showPolygonCheckbox = document.getElementById(
+    "showPolygonCheckbox"
+) as HTMLInputElement
 
 const mouseHandleRadius = 8
 const points: Vec2[] = []
@@ -36,6 +39,8 @@ curveStepsInput.addEventListener("change", () => {
     curveSteps = curveStepsInput.valueAsNumber
     draw()
 })
+
+showPolygonCheckbox.addEventListener("change", draw)
 
 // suppress contex menu for removing points on right click
 canvas.addEventListener("contextmenu", (event) => event.preventDefault())
@@ -80,8 +85,10 @@ function draw() {
     ctx.reset()
     const curve = bezierCurve(points, curveSteps)
     drawPath(ctx, curve, "rgb(0, 100, 200)")
-    drawPolygon(ctx, points)
-    drawPolygon(ctx, elevatedPoints, "rgb(0, 100, 0)")
+    if (showPolygonCheckbox.checked) {
+        drawPolygon(ctx, points)
+        drawPolygon(ctx, elevatedPoints, "rgb(0, 100, 0)")
+    }
 }
 
 function handleDegreeChange() {
