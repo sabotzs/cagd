@@ -10,7 +10,8 @@ const curveStepsInput = document.getElementById(
 ) as HTMLInputElement
 
 const mouseHandleRadius = 8
-let points: Vec2[] = []
+const points: Vec2[] = []
+let elevatedPoints: Vec2[] = []
 let curveSteps: number = curveStepsInput.valueAsNumber
 let movedPoint: Vec2 | undefined
 
@@ -31,7 +32,11 @@ curveStepsInput.addEventListener("change", () => {
 document.addEventListener("keydown", (event) => {
     console.log(event.key)
     if (event.key === "PageUp" || (event.ctrlKey && event.key === "ArrowUp")) {
-        points = elevateDegree(points)
+        if (elevatedPoints.length > 0) {
+            elevatedPoints = elevateDegree(elevatedPoints)
+        } else {
+            elevatedPoints = elevateDegree(points)
+        }
         draw()
     }
 })
@@ -77,6 +82,7 @@ function draw() {
     const curve = bezierCurve(points, curveSteps)
     drawPath(ctx, curve, "rgb(0, 100, 200)")
     drawPolygon(ctx, points)
+    drawPolygon(ctx, elevatedPoints, "rgb(0, 100, 0)")
 }
 
 function mouseLocationInCanvas(event: MouseEvent): Vec2 {
