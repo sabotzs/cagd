@@ -14,6 +14,9 @@ const curveStepsInput = document.getElementById(
 const showInputPolygonCheckbox = document.getElementById(
     "showInputPolygonCheckbox"
 ) as HTMLInputElement
+const showElevatedPolygonCheckbox = document.getElementById(
+    "showElevatedPolygonCheckbox"
+) as HTMLInputElement
 const resetButton = document.getElementById("resetButton") as HTMLButtonElement
 
 const mouseHandleRadius = 8
@@ -33,6 +36,7 @@ canvas.addEventListener("mouseup", handleMouseUp)
 elevatedDegreeInput.addEventListener("change", handleDegreeChange)
 curveStepsInput.addEventListener("change", handleCurveStepsChange)
 showInputPolygonCheckbox.addEventListener("change", draw)
+showElevatedPolygonCheckbox.addEventListener("change", draw)
 resetButton.addEventListener("click", resetEverything)
 
 // suppress contex menu for removing points on right click
@@ -81,7 +85,9 @@ function draw() {
     if (showInputPolygonCheckbox.checked) {
         drawPolygon(ctx, points)
     }
-    drawPolygon(ctx, elevatedPoints, "rgb(0, 100, 0)")
+    if (showElevatedPolygonCheckbox.checked) {
+        drawPolygon(ctx, elevatedPoints, "rgb(0, 100, 0)")
+    }
 }
 
 function handleDegreeChange() {
