@@ -17,11 +17,11 @@ When you've started the server, go to [http://localhost:5173/]()
 * Right click on control point to remove it
 * Drag the point to move it where you want
 ### Interaction with the sidebar controls
-The input field, labeled "Elevated degree" sets the degree to which we want to elevate the input polygon. After you interact with it, it draws an additional polygon, whose degree is the provided value. Its value can not go lower than the input polygon degree.
+The input field, labeled "Elevated degree", sets the degree to which we want to elevate the input polygon. After you interact with it, it draws an additional polygon, whose degree is the provided value. Its value can not go lower than the input polygon degree.
 > [!NOTE]
 > Any innteraction with the input polygon resets the elevated degree.
 
-The input field, labeled "Curve steps" represents the number of lines used to draw the curve. The higher the number, the smoother the curve.
+The input field, labeled "Curve steps", represents the number of lines used to draw the curve. The higher the number, the smoother the curve.
 
 The 2 checkboxes set whether the respective polygon is drawn on the canvas.
 
