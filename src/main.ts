@@ -128,6 +128,7 @@ function resetEverything() {
     points.splice(0, points.length)
     elevatedPoints = []
     elevatedDegreeInput.value = ""
+    curveStepsInput.valueAsNumber = curveSteps = 100
     ctx.reset()
 }
 
