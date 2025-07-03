@@ -15,16 +15,42 @@
         width: 100%;
         box-sizing: border-box;
       }
+      #container {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+        gap: 10px;
+      }
       #canvas {
         flex: 1;
         display: block;
         width: 100%;
         height: 100%;
         box-sizing: border-box;
+        border: 1px solid black;
+        border-radius: 20px;
+        box-sizing: border-box;
+      }
+      #sidebar {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
       }
     </style>
   </head>
   <body>
-    <canvas id="canvas"></canvas>
+    <div id="container">
+      <canvas id="canvas"></canvas>
+      <div id="sidebar">
+        <div>
+          <label for="curveSteps">Curve steps:</label>
+          <input type="number" id="curveSteps" value="100" />
+        </div>
+      </div>
+    </div>
   </body>
 </html>

@@ -5,8 +5,13 @@ import { Vec2 } from "./Vec2"
 const canvas = document.getElementById("canvas") as HTMLCanvasElement
 const ctx = canvas.getContext("2d") as CanvasRenderingContext2D
 
+const curveStepsInput = document.getElementById(
+    "curveSteps"
+) as HTMLInputElement
+
 const mouseHandleRadius = 8
 let points: Vec2[] = []
+let curveSteps: number = curveStepsInput.valueAsNumber
 let movedPoint: Vec2 | undefined
 
 window.addEventListener("load", () => {
@@ -17,6 +22,11 @@ window.addEventListener("load", () => {
 canvas.addEventListener("mousedown", handleMouseDown)
 canvas.addEventListener("mousemove", handleMouseMove)
 canvas.addEventListener("mouseup", handleMouseUp)
+
+curveStepsInput.addEventListener("change", () => {
+    curveSteps = curveStepsInput.valueAsNumber
+    draw()
+})
 
 document.addEventListener("keydown", (event) => {
     console.log(event.key)
@@ -64,7 +74,7 @@ function handleMouseUp() {
 
 function draw() {
     ctx.reset()
-    const curve = bezierCurve(points)
+    const curve = bezierCurve(points, curveSteps)
     drawPath(ctx, curve, "rgb(0, 100, 200)")
     drawPolygon(ctx, points)
 }
