@@ -5,6 +5,9 @@ import { Vec2 } from "./Vec2"
 const canvas = document.getElementById("canvas") as HTMLCanvasElement
 const ctx = canvas.getContext("2d") as CanvasRenderingContext2D
 
+const elevatedDegreeInput = document.getElementById(
+    "elevatedDegreeInput"
+) as HTMLInputElement
 const curveStepsInput = document.getElementById(
     "curveStepsInput"
 ) as HTMLInputElement
@@ -24,21 +27,14 @@ canvas.addEventListener("mousedown", handleMouseDown)
 canvas.addEventListener("mousemove", handleMouseMove)
 canvas.addEventListener("mouseup", handleMouseUp)
 
-curveStepsInput.addEventListener("change", () => {
-    curveSteps = curveStepsInput.valueAsNumber
+elevatedDegreeInput.addEventListener("change", () => {
+    handleDegreeChange()
     draw()
 })
 
-document.addEventListener("keydown", (event) => {
-    console.log(event.key)
-    if (event.key === "PageUp" || (event.ctrlKey && event.key === "ArrowUp")) {
-        if (elevatedPoints.length > 0) {
-            elevatedPoints = elevateDegree(elevatedPoints)
-        } else {
-            elevatedPoints = elevateDegree(points)
-        }
-        draw()
-    }
+curveStepsInput.addEventListener("change", () => {
+    curveSteps = curveStepsInput.valueAsNumber
+    draw()
 })
 
 // suppress contex menu for removing points on right click
@@ -55,12 +51,15 @@ function handleMouseDown(event: MouseEvent) {
     if (selectedPointIndex !== -1) {
         if (event.button === 0) {
             movedPoint = points[selectedPointIndex]
+            resetElevatedDegree()
         } else if (event.button === 2) {
             points.splice(selectedPointIndex, 1)
+            resetElevatedDegree()
             draw()
         }
     } else if (event.button === 0) {
         points.push(mousePoint)
+        resetElevatedDegree()
         draw()
     }
 }
@@ -83,6 +82,40 @@ function draw() {
     drawPath(ctx, curve, "rgb(0, 100, 200)")
     drawPolygon(ctx, points)
     drawPolygon(ctx, elevatedPoints, "rgb(0, 100, 0)")
+}
+
+function handleDegreeChange() {
+    const multiElevateDegree = (points: Vec2[], n: number): Vec2[] => {
+        if (n <= 0) {
+            return points
+        }
+
+        let result = points
+        for (let i = 0; i < n; ++i) {
+            result = elevateDegree(result)
+        }
+        return result
+    }
+
+    if (elevatedDegreeInput.valueAsNumber < Number(elevatedDegreeInput.min)) {
+        elevatedDegreeInput.valueAsNumber =
+            elevatedPoints.length > 0 ? elevatedPoints.length : points.length
+        return
+    }
+
+    const diff = elevatedDegreeInput.valueAsNumber - elevatedPoints.length
+    if (diff > 0 && elevatedPoints.length > 0) {
+        elevatedPoints = multiElevateDegree(elevatedPoints, diff)
+    } else {
+        const diff = elevatedDegreeInput.valueAsNumber - points.length
+        elevatedPoints = multiElevateDegree(points, diff)
+    }
+}
+
+function resetElevatedDegree() {
+    elevatedDegreeInput.min = String(points.length)
+    elevatedDegreeInput.valueAsNumber = points.length
+    elevatedPoints = []
 }
 
 function mouseLocationInCanvas(event: MouseEvent): Vec2 {
