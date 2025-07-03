@@ -14,6 +14,7 @@ const curveStepsInput = document.getElementById(
 const showPolygonCheckbox = document.getElementById(
     "showPolygonCheckbox"
 ) as HTMLInputElement
+const resetButton = document.getElementById("resetButton") as HTMLButtonElement
 
 const mouseHandleRadius = 8
 const points: Vec2[] = []
@@ -29,18 +30,10 @@ window.addEventListener("load", () => {
 canvas.addEventListener("mousedown", handleMouseDown)
 canvas.addEventListener("mousemove", handleMouseMove)
 canvas.addEventListener("mouseup", handleMouseUp)
-
-elevatedDegreeInput.addEventListener("change", () => {
-    handleDegreeChange()
-    draw()
-})
-
-curveStepsInput.addEventListener("change", () => {
-    curveSteps = curveStepsInput.valueAsNumber
-    draw()
-})
-
+elevatedDegreeInput.addEventListener("change", handleDegreeChange)
+curveStepsInput.addEventListener("change", handleCurveStepsChange)
 showPolygonCheckbox.addEventListener("change", draw)
+resetButton.addEventListener("click", resetEverything)
 
 // suppress contex menu for removing points on right click
 canvas.addEventListener("contextmenu", (event) => event.preventDefault())
@@ -117,6 +110,19 @@ function handleDegreeChange() {
         const diff = elevatedDegreeInput.valueAsNumber - points.length
         elevatedPoints = multiElevateDegree(points, diff)
     }
+    draw()
+}
+
+function handleCurveStepsChange() {
+    curveSteps = curveStepsInput.valueAsNumber
+    draw()
+}
+
+function resetEverything() {
+    points.splice(0, points.length)
+    elevatedPoints = []
+    elevatedDegreeInput.value = ""
+    ctx.reset()
 }
 
 function resetElevatedDegree() {
